@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,15 +10,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Material Design Bootstrap</title>
+  <title>Product Page</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
   <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
-  <link href="css/style.min.css" rel="stylesheet">
+  <link href="{% static 'css/style.min.css'%}" rel="stylesheet">
 </head>
 
 <body>
@@ -23,8 +28,8 @@
     <div class="container">
 
       <!-- Brand -->
-      <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-        <strong class="blue-text">MDB</strong>
+      <a class="navbar-brand waves-effect" href="#" target="_blank">
+        <strong class="blue-text">MamaMbogaGroceries</strong>
       </a>
 
       <!-- Collapse -->
@@ -39,20 +44,19 @@
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link waves-effect" href="#">Home
+            <a class="nav-link waves-effect" href="home">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About MDB</a>
+            <a class="nav-link waves-effect" href="#" target="Checkout">About </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
-              target="_blank">Free download</a>
+            <a class="nav-link waves-effect" href="#" target="_blank">F</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Free
-              tutorials</a>
+            <a class="nav-link waves-effect" href="#" target="_blank">
+            </a>
           </li>
         </ul>
 
@@ -66,19 +70,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
+            <a href="#" class="nav-link waves-effect" target="_blank">
               <i class="fab fa-facebook-f"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
+            <a href="#" class="nav-link waves-effect" target="_blank">
               <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded waves-effect"
-              target="_blank">
-              <i class="fab fa-github mr-2"></i>MDB GitHub
             </a>
           </li>
         </ul>
@@ -95,13 +93,14 @@
 
       <!--Grid row-->
       <div class="row wow fadeIn">
-
+      
         <!--Grid column-->
         <div class="col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
-
+          
+          <img src="{item.image.url}" class="img-fluid" alt="{{item.slug}}">
+          
         </div>
+        
         <!--Grid column-->
 
         <!--Grid column-->
@@ -112,47 +111,51 @@
 
             <div class="mb-3">
               <a href="">
-                <span class="badge purple mr-1">Category 2</span>
+                <span class="badge purple mr-1">{{object.get_category}}</span>
               </a>
               <a href="">
-                <span class="badge blue mr-1">New</span>
+                <span class="badge blue mr-1">Fresh</span>
               </a>
               <a href="">
-                <span class="badge red mr-1">Bestseller</span>
+                <span class="badge red mr-1">Nutrious</span>
               </a>
             </div>
 
             <p class="lead">
+              {% if object.discount_price %}
               <span class="mr-1">
-                <del>$200</del>
+                <del>{{ object.price}}KES</del>
               </span>
-              <span>$100</span>
+             
+              <span>{{ object.discount_price}}</span>
+              
+              {% else %}
+                   <span>{{object.price}}</span> 
+              {% endif %}
+                    KES
             </p>
 
             <p class="lead font-weight-bold">Description</p>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa
-              sint voluptatibus!
-              Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.</p>
+            <p>{{object.description}}</p>
 
             <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
 
-            </form>
-
+            <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+            <a href='{{object.get_add_to_cart_url}}' class="btn btn-primary btn-md my-0 p">
+              Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+          </form>
           </div>
           <!--Content-->
 
         </div>
         <!--Grid column-->
-
+        
       </div>
       <!--Grid row-->
-
+      
       <hr>
 
       <!--Grid row-->
@@ -179,7 +182,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-12 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+          <img src="{% static 'img/brocolli.jpeg'%}" class="img-fluid" alt="brocolli">
 
         </div>
         <!--Grid column-->
@@ -187,7 +190,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+          <img src="{% static 'img/cauliflowe.jpeg'%}" class="img-fluid" alt="cauliflower">
 
         </div>
         <!--Grid column-->
@@ -195,7 +198,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+          <img src="{% static 'img/babyspinach.jpeg'%}" class="img-fluid" alt="babyspinach">
 
         </div>
         <!--Grid column-->
@@ -212,13 +215,13 @@
 
     <!--Call to action-->
     <div class="pt-4">
-      <a class="btn btn-outline-white" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank"
-        role="button">Download MDB
-        <i class="fas fa-download ml-2"></i>
+      <a class="btn btn-outline-white" href="#"
+        target="_blank" role="button"> Contact Us
+        
       </a>
-      <a class="btn btn-outline-white" href="https://mdbootstrap.com/education/bootstrap/" target="_blank" role="button">Start
-        free tutorial
-        <i class="fas fa-graduation-cap ml-2"></i>
+      <a class="btn btn-outline-white" href="#" target="_blank"
+        role="button">Buy all grocerries here
+        
       </a>
     </div>
     <!--/.Call to action-->
@@ -227,44 +230,22 @@
 
     <!-- Social icons -->
     <div class="pb-4">
-      <a href="https://www.facebook.com/mdbootstrap" target="_blank">
+      <a href="#" target="_blank">
         <i class="fab fa-facebook-f mr-3"></i>
       </a>
 
-      <a href="https://twitter.com/MDBootstrap" target="_blank">
+      <a href="#" target="_blank">
         <i class="fab fa-twitter mr-3"></i>
       </a>
 
-      <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
-        <i class="fab fa-youtube mr-3"></i>
-      </a>
-
-      <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
-        <i class="fab fa-google-plus-g mr-3"></i>
-      </a>
-
-      <a href="https://dribbble.com/mdbootstrap" target="_blank">
-        <i class="fab fa-dribbble mr-3"></i>
-      </a>
-
-      <a href="https://pinterest.com/mdbootstrap" target="_blank">
-        <i class="fab fa-pinterest mr-3"></i>
-      </a>
-
-      <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
-        <i class="fab fa-github mr-3"></i>
-      </a>
-
-      <a href="http://codepen.io/mdbootstrap/" target="_blank">
-        <i class="fab fa-codepen mr-3"></i>
-      </a>
+   
     </div>
     <!-- Social icons -->
 
     <!--Copyright-->
     <div class="footer-copyright py-3">
-      © 2019 Copyright:
-      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+      © 2021 Copyright:
+      <a href="#" target="_blank"> MamaMbogaGroceries </a>
     </div>
     <!--/.Copyright-->
 
@@ -289,3 +270,5 @@
 </body>
 
 </html>
+
+{% endblock content %}
